@@ -50,10 +50,10 @@ namespace LearnSmartCoding.API
                 var nestedProp = config.GetValue<string>("Inventory:NestedProperty");
 
 
-                //Log.ForContext("ConnectionString", connectionString)
-                //    .ForContext("SimpleProperty", simpleProperty)
-                //    .ForContext("Inventory:NestedProperty", nestedProp)
-                //    .Information("Loaded configuration!", connectionString);
+               Log.ForContext("ConnectionString", connectionString)
+                    .ForContext("SimpleProperty", simpleProperty)
+                    .ForContext("Inventory:NestedProperty", nestedProp)
+                    .Information("Loaded configuration!", connectionString);
 
                 var dbgView = config.GetDebugView();
                 Log.ForContext("ConfigurationDebug", dbgView)
