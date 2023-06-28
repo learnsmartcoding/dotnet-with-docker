@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  learnsmartcoding.api:
+    image: ${DOCKER_REGISTRY-}learnsmartcodingapi
+    build:
+      context: .
+      dockerfile: LearnSmartCoding.API/Dockerfile
+    ports:
+      - "8080:80"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - SimpleProperty="hello-from-code-compose"
+    depends_on: 
+      - seq_in_dc
+
+  seq_in_dc:    
+    image: datalust/seq    
+    ports:
+      - '8005:80'      
+    environment:
+      - ACCEPT_EULA=Y 
+      

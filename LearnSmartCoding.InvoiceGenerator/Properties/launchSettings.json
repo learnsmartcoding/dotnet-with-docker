@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "LearnSmartCoding.InvoiceGenerator": {
+      "commandName": "Project"
+    },
+    "Docker": {
+      "commandName": "Docker"
+    }
+  }
+}

@@ -1,0 +1,107 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/LearnSmartCoding.API/LearnSmartCoding.API.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "publish",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "publish",
+                "${workspaceFolder}/LearnSmartCoding.API/LearnSmartCoding.API.csproj",
+                "/property:GenerateFullPaths=true",
+                "/consoleloggerparameters:NoSummary"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "watch",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "watch",
+                "run",
+                "--project",
+                "${workspaceFolder}/LearnSmartCoding.API/LearnSmartCoding.API.csproj"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "type": "docker-build",
+            "label": "docker-build: debug",
+            "dependsOn": [
+                "build"
+            ],
+            "dockerBuild": {
+                "tag": "learnsmartcodingdocker:dev",
+                "target": "base",
+                "dockerfile": "${workspaceFolder}/LearnSmartCoding.API/Dockerfile",
+                "context": "${workspaceFolder}",
+                "pull": true
+            },
+            "netCore": {
+                "appProject": "${workspaceFolder}/LearnSmartCoding.API/LearnSmartCoding.API.csproj"
+            }
+        },
+        {
+            "type": "docker-build",
+            "label": "docker-build: release",
+            "dependsOn": [
+                "build"
+            ],
+            "dockerBuild": {
+                "tag": "learnsmartcodingdocker:latest",
+                "dockerfile": "${workspaceFolder}/LearnSmartCoding.API/Dockerfile",
+                "context": "${workspaceFolder}",
+                "pull": true
+            },
+            "netCore": {
+                "appProject": "${workspaceFolder}/LearnSmartCoding.API/LearnSmartCoding.API.csproj"
+            }
+        },
+        {
+            "type": "docker-run",
+            "label": "docker-run: debug",
+            "dependsOn": [
+                "docker-build: debug"
+            ],
+            "dockerRun": {
+                "env": {
+                    "ASPNETCORE_ENVIRONMENT": "Development",
+                    "Inventory__NestedProperty": "NestedProperty from lunch settings" 
+                }
+            },
+            "netCore": {
+                "appProject": "${workspaceFolder}/LearnSmartCoding.API/LearnSmartCoding.API.csproj",
+                "enableDebugging": true,
+                "configureSsl": false
+            }
+        },
+        {
+            "type": "docker-run",
+            "label": "docker-run: release",
+            "dependsOn": [
+                "docker-build: release"
+            ],
+            "dockerRun": {
+                "env":{
+                    
+                }
+            },
+            "netCore": {
+                "appProject": "${workspaceFolder}/LearnSmartCoding.API/LearnSmartCoding.API.csproj"
+            }
+        }
+    ]
+}
